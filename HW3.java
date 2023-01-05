@@ -38,13 +38,19 @@ public class HW3 {
         System.out.println("------------------");
 
         System.out.println("Написать метод, в который передается не пустой одномерный целочисленный массив,\n" +
-                "метод должен вернуть true, если в массиве есть место, в котором сумма левой и правой части\n" +
-                "массива равны");
+                            "метод должен вернуть true, если в массиве есть место, в котором сумма левой и правой части\n" +
+                            "массива равны");
         int [] arr7 = {1, 2, 3, 5};
         System.out.println(comparisonOfArrParts (arr7));
         int [] arr8 = {1, 2, 2, 5};
         System.out.println(comparisonOfArrParts (arr8));
         System.out.println("------------------");
+
+        System.out.println("Написать метод, которому на вход подается одномерный массив и число n (может быть\n" +
+                            "положительным, или отрицательным), при этом метод должен сместить все элементы массива\n" +
+                            "на n позиций. Элементы смещаются циклично.");
+        System.out.println(Arrays.toString(shiftArray (arr7, -2)));
+        System.out.println(Arrays.toString(shiftArray (arr8, 10)));
 
     }
 
@@ -107,7 +113,7 @@ public class HW3 {
     static void minAndMax (int arr[]) {                             //Задача 6.
         Scanner scanner = new Scanner(System.in);
         System.out.println("Введите длинну массива\n");
-        int [] arr = new int[scanner.nextInt()];
+        arr = new int[scanner.nextInt()];
         for (int i = 0; i < arr.length; i++) {
             System.out.println("Введите значение для i=" + i );
             arr [i] = scanner.nextInt();
@@ -126,20 +132,34 @@ public class HW3 {
         System.out.println("max = " + max);
     }
 
-    static boolean comparisonOfArrParts (int arr[]) {
+    static boolean comparisonOfArrParts (int arr[]) {// задача 7
         System.out.println(Arrays.toString(arr));
         int sum = 0;
         int part = 0;
-        for (int i = 0; i < arr.length; i++) {
-            sum += arr[i];
+        for (int i : arr) {
+            sum += i;
         }
         for (int i = 0; i < arr.length; i++) {
+            part += arr[i];
             if (part == sum - part) {
                 return true;
-            } else {
-                part += arr[i];
             }
         }
         return false;
+    }
+
+    static int[] shiftArray(int[] arr, int shift) {                 //задача 8
+        shift = shift % arr.length; //убираем полный проворот
+        if (shift < 0) {
+            shift += arr.length; //приводим смещение к положительному
+        }
+        for (int i = 0; i < shift; i++) {
+            int tmp = arr[arr.length - 1];
+            for (int j = arr.length - 1; j > 0; j--) {
+                arr[j] = arr[j-1];
+            }
+            arr[0] = tmp;
+        }
+        return arr;
     }
 }
